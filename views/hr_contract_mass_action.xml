@@ -1,12 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Inherit Form View: Tambah Field Letter URL -->
+    <record id="view_hr_contract_form_inherit_letter_url" model="ir.ui.view">
+        <field name="name">hr.contract.form.inherit.letter.url</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Tambahkan setelah field HR Responsible -->
+            <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                <field name="letter_url" widget="url" string="Surat PKWT (Link)" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Server Action: Generate Surat PKWT dari Contract History -->
   <record id="action_generate_pkwt_letters_server" model="ir.actions.server">
     <field name="name">Generate Surat PKWT</field>
     <field name="model_id" ref="hr_contract.model_hr_contract_history"/>
     <field name="state">code</field>
     <field name="binding_model_id" ref="hr_contract.model_hr_contract_history"/>
-    <field name="binding_view_types">list</field>
+    <field name="binding_type">action</field>
     <field name="code">
-      action = records.generate_pkwt_letters()
+      for rec in records:
+          rec.generate_pkwt_letters()
     </field>
   </record>
+
 </odoo>
