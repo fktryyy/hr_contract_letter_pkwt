@@ -20,8 +20,9 @@
       <t t-call="web.external_layout">
         <t t-foreach="docs" t-as="doc">
           <t t-set="employee" t-value="doc.employee_id"/>
-            <t t-set="weekday_name" t-value="doc.today_weekday"/>
-              <t t-set="full_date" t-value="doc.today_display"/>
+            <t t-set="contract_id" t-value="doc"/>
+              <t t-set="weekday_name" t-value="doc.today_weekday"/>
+               <t t-set="full_date" t-value="doc.today_display"/>
         <div class="text-center">
           <h3><u>PERJANJIAN KERJA WAKTU TERTENTU</u></h3>
           <t t-if="doc.pkwt_letter_number">
@@ -31,141 +32,317 @@
         </div>
           <p>Pada hari ini <t t-esc="weekday_name"/>, tanggal <t t-esc="full_date"/> telah diadakan Perjanjian Kerja Waktu Tertentu dari dan antara :</p>
        <!-- Pihak Pertama -->
-      <p style="margin-left: 20px;">I. Nama<span style="display:inline-block; width:20px;"></span>: Amelia Putri Ardilla</p>
-      <p style="margin-left: 42px;">Jabatan<span style="display:inline-block; width:5px;"></span>: Human Resources</p>
-      <p style="margin-left: 42px;">Alamat<span style="display:inline-block; width:13px;"></span>: Perum Griya Utama Sedayu Mas BLok C No. 14 Kel. Sembungharjo<br/>
-      Kec. Genuk Kota Semarang</p>
-
-      <p style="margin-left: 20px;">Dalam hal ini bertindak untuk dan atas nama PT Subah Spinning Mils. Untuk selanjutnya disebut “Pihak Pertama”.</p>
+      <table style="margin-left: 20px; border-collapse: collapse; border: none;" border="0">
+        <tr>
+          <td style="border: none; vertical-align: top;">I.</td>
+          <td style="padding-left: 10px; border: none;">Nama</td>
+          <td style="padding: 0 10px; border: none;">:</td>
+          <td style="border: none;">Amelia Putri Ardilla</td>
+        </tr>
+        <tr>
+          <td style="border: none;"></td>
+          <td style="padding-left: 10px; border: none;">Jabatan</td>
+          <td style="padding: 0 10px; border: none;">:</td>
+          <td style="border: none;">Human Resources</td>
+        </tr>
+        <tr>
+          <td style="border: none;"></td>
+          <td style="padding-left: 10px; vertical-align: top; border: none;">Alamat</td>
+          <td style="padding: 0 10px; vertical-align: top; border: none;">:</td>
+          <td style="border: none;">
+            Perum Griya Utama Sedayu Mas BLok C No. 14 Kel. Sembungharjo<br/>
+            Kec. Genuk Kota Semarang
+          </td>
+        </tr>
+      </table>
+      <p>Dalam hal ini bertindak untuk dan atas nama Perseroan Terbatas PT. Mitra Career Solution. Untuk
+      selanjutnya disebut “Pihak Pertama”.</p>
 
       <!-- Pihak Kedua -->
-      <p style="margin-left: 20px;">II. Nama<span style="display:inline-block; width:20px;"></span>: <t t-esc="employee.name"/></p>
-      <!-- <p style="margin-left: 42px;">No. KTP / SIM: <t t-esc="employee.ktp or ''"/></p> -->
-      <p style="margin-left: 42px;">Tempat, Tanggal Lahir<span style="display:inline-block; width:5px;"></span>: <t t-esc="(employee.place_of_birth or '') + ', ' + (employee.birthday.strftime('%d %B %Y') if employee.birthday else '')"/></p>
-      <p style="margin-left: 42px;">Jenis kelamin<span style="display:inline-block; width:28px;"></span>: <t t-esc="'Laki-laki' if employee.gender == 'male' else 'Perempuan' if employee.gender == 'female' else 'Lainnya'"/></p>
-      <p style="margin-left: 42px;">Alamat<span style="display:inline-block; width:33px;"></span>: <t t-esc="employee.alamat"/></p>
-        <p>Dalam hal ini bertindak untuk dan atas nama Diri Sendiri. Untuk selanjutnya disebut “Pihak Kedua”.</p>
-        <p>Selanjutnya secara bersama-sama disebut “Para Pihak”.</p>
+        <table style="margin-left: 20px; border-collapse: collapse; border: none;" border="0">
+          <tr>
+            <td style="border: none; vertical-align: top;">II.</td>
+            <td style="padding-left: 10px; border: none;">Nama</td>
+            <td style="padding: 0 10px; border: none;">:</td>
+            <td style="border: none;"><t t-esc="employee.name"/></td>
+          </tr>
+          <tr>
+            <td style="border: none;"></td>
+            <td style="padding-left: 10px; border: none;">No. KTP / SIM</td>
+            <td style="padding: 0 10px; border: none;">:</td>
+            <td style="border: none;"><t t-esc="employee.identification_id"/></td>
+          </tr>
+          <tr>
+            <td style="border: none;"></td>
+            <td style="padding-left: 10px; border: none;">Tempat, Tanggal Lahir</td>
+            <td style="padding: 0 10px; border: none;">:</td>
+            <td style="border: none;">
+              <t t-esc="(employee.place_of_birth or '') + ', ' + (employee.birthday.strftime('%d %B %Y') if employee.birthday else '')"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="border: none;"></td>
+            <td style="padding-left: 10px; border: none;">Jenis Kelamin</td>
+            <td style="padding: 0 10px; border: none;">:</td>
+            <td style="border: none;">
+              <t t-esc="'Laki-laki' if employee.gender == 'male' else 'Perempuan' if employee.gender == 'female' else 'Lainnya'"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="border: none;"></td>
+            <td style="padding-left: 10px; vertical-align: top; border: none;">Alamat</td>
+            <td style="padding: 0 10px; vertical-align: top; border: none;">:</td>
+            <td style="border: none;"><t t-esc="employee.alamat"/></td>
+          </tr>
+        </table>
 
+        <p style="margin-bottom: 2px;">
+          Dalam hal ini bertindak untuk dan atas nama Diri Sendiri. Untuk selanjutnya disebut “Pihak Kedua”.
+        </p>
+        <p style="margin-top: 0;">
+          Selanjutnya secara bersama-sama disebut “Para Pihak”.
+        </p>
         <p>Para Pihak terlebih dahulu menerangkan:</p>
-        <ol>
-          <li>Bahwa Pihak Kedua dengan ini bermaksud untuk bekerja pada Pihak Pertama.</li>
-          <li>Bahwa dalam rangka untuk memenuhi target Perusahaan, Pihak Pertama bersedia untuk memberikan pekerjaan kepada Pihak Kedua untuk berdasarkan atas jangka waktu atau selesainya suatu pekerjaan tertentu.</li>
-          <li>Bahwa detail mengenai jangka waktu atau selesainya suatu pekerjaan tertentu, masa kerja, posisi, penempatan, tempat penerimaan bekerja dan upah akan diatur dalam Lampiran 1, yang merupakan kesatuan dan tidak terpisah dari perjanjian ini.</li>
+        <ol style="margin-left: 20px; padding-left: 10px;">
+          <li style="margin-bottom: 8px; line-height: 1.5;">Bahwa Pihak Kedua dengan ini bermaksud untuk bekerja pada Pihak Pertama.</li>
+          <li style="margin-bottom: 8px; line-height: 1.5;">Bahwa dalam rangka untuk memenuhi target Perusahaan, Pihak Pertama bersedia untuk
+          memberikan pekerjaan kepada Pihak Kedua untuk berdasarkan atas jangka waktu atau
+          selesainya suatu pekerjaan tertentu.</li>
+          <li style="margin-bottom: 8px; line-height: 1.5;">Bahwa detail mengenai jangka waktu atau selesainya suatu pekerjaan tertentu, masa kerja,
+          posisi, penempatan, tempat penerimaan bekerja dan upah akan diatur dalam Lampiran 1, yang
+          merupakan kesatuan dan tidak terpisah dari perjanjian ini.</li>
         </ol>
 
-        <p>Berdasarkan keterangan tersebut di atas, maka Para Pihak dengan ini sepakat untuk membuat Perjanjian Kerja Waktu Tertentu (“Perjanjian kerja”) dengan syarat-syarat dan ketentuan-ketentuan sebagai berikut :</p>
+        <p style="line-height: 1.5; margin-bottom: 8px;">Berdasarkan keterangan tersebut di atas, maka Para Pihak dengan ini sepakat untuk membuat
+        Perjanjian Kerja Waktu Tertentu (“Perjanjian kerja”) dengan syarat-syarat dan ketentuan-ketentuan
+        sebagai berikut :</p>
 
-        <h4><u>PASAL 1</u></h4>
-  <p><strong>Ruang Lingkup Pekerjaan dan Lamanya Pekerjaan</strong></p>
-  <ol>
-    <li>Ruang lingkup pekerjaan yang terkait dengan batasan pekerjaan, target pekerjaan dan batasan dari selesainya pekerjaan diatur dalam Lampiran 1.</li>
-    <li>Lamanya waktu Perjanjian Kerja diatur dalam Lampiran 1.</li>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 1</u></h4>
+    <p style="font-weight: bold; margin-top: 0;">Ruang Lingkup Pekerjaan dan Lamanya Pekerjaan</p>
+  </div>
+  <ol style="margin-left: 20px; padding-left: 10px;">
+    <li style="margin-bottom: 8px; line-height: 1.5;">
+      Ruang lingkup pekerjaan yang terkait dengan batasan pekerjaan, target pekerjaan dan batasan dari selesainya pekerjaan diatur dalam Lampiran 1.
+    </li>
+    <li style="margin-bottom: 8px; line-height: 1.5;">
+      Lamanya waktu Perjanjian Kerja diatur dalam Lampiran 1.
+    </li>
+  </ol>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 2</u></h4>
+    <p style="font-weight: bold; margin-top: 0;">Jenis dan Penempatan Pekerjaan</p>
+  </div>
+  <ol style="margin-left: 20px; padding-left: 10px;">
+    <li style="margin-bottom: 8px; line-height: 1.5;">Pihak Kedua bekerja pada Pihak Pertama dengan posisi dan Point Of Hire (POH) sesuai dengan yang diatur dalam Lampiran 1.</li>
+    <li style="margin-bottom: 8px; line-height: 1.5;">Pihak Pertama berhak memberikan tugas dan jabatan lain serta lokasi kerja di tempat lain dari yang disebut dalam ayat ini.</li>
+  </ol>
+  <div style="text-align: center;">
+  <h4 style="margin-bottom: 4px;"><u>PASAL 3</u></h4>
+  <p style="font-weight: bold; margin-top: 0;">Pengupahan, Waktu Kerja dan Kesejahteraan Karyawan</p>
+  </div>
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Selama berlangsungnya Perjanjian ini, Pihak Pertama akan membayar upah kepada Pihak Kedua setiap bulannya dengan perincian sesuai yang diatur dalam Lampiran 1.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Selain dari upah Pihak Pertama juga akan memberikan Insentif kinerja yang diberikan tidak
+    kurang dari 98% atau maksimum 100% dari total insentif berdasarkan kinerja perusahaan dan
+    bersifat tidak tetap, sehingga komponen ini tidak termasuk dalam perhitungan Kompensasi
+    berakhirnya PerjanjIan Kerja seperti yang dimaksud dalam Peraturan Pemerintah No. 35 Tahun
+    2021 Tentang Perjanjian Kerja, Alih Daya, Waktu Kerja, Waktu Istirahat dan PHK. Besaran
+    Insentif Kinerja yang diberikan akan diatur dalam Lampiran 1, dimana angka insentif yang
+    dicantumkan dalam Lampiran 1 adalah nilai 100% dari Insentif Kinerja.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Jam Kerja diatur Pihak Pertama sesuai dengan ketentuan yang termuat didalam Peraturan
+    Perusahaan serta Peraturan Pelaksanaannya dengan mengacu kepada ketentuan perundangan
+    mengenai jam kerja.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua akan menanggung sendiri PPh dan selisih kekurangan PPh atas Upah Kerja dan
+    Insentif Kinerja tersebut diatas dan/ atau potongan lainnya yang ada atau yang mungkin ada
+    dikemudian hari berdasarkan keputusan/peraturan yang dikeluarkan oleh Perusahaan/
+    Pemerintah, yang pemotongannya akan diberikan oleh Pihak Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Pertama akan mendaftarkan Pihak Kedua sebagai peserta BPJS Ketenagakerjaan sesuai
+    UU No. 24 Tahun 2011 jo. Peraturan Pemerintah No. 37 Tahun 2021 yang meliputi Program
+    Jaminan Kecelakaan Kerja, Jaminan Kematian, Jaminan Hari Tua, Jaminan Pensiun dan Jaminan
+    Kehilangan Pekerjaan.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Pertama akan mengikutsertakan Pihak Kedua dalam Program BPJS Kesehatan melalui
+    badan penyelenggara BPJS Kesehatan atau asuransi kesehatan baik yang ditunjuk oleh Pihak
+    Pertama atau yang diselenggarakan sendiri oleh Pihak Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Pertama akan memberikan Tunjangan Hari Raya (THR) kepada Pihak Kedua sesuai dengan
+    ketentuan yang berlaku di Perusahaan dengan ketentuan tidak lebih rendah dari peraturan
+    perundangan yang berlaku.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua diberikan Cuti hari kerja sesuai dengan ketentuan yang berlaku di Perusahaan.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Posisi/Jabatan/Grade Pihak Kedua merupakan jabatan yang tidak diklasifikasikan mendapat
+    Uang Kerja Lembur sebagaimana dimaksud dalam Peraturan Pemerintah Nomor 35 Pasal 27
+    ayat 2 dan ayat 3.</li>
   </ol>
 
-  <h4><u>PASAL 2</u></h4>
-  <p><strong>Jenis dan Penempatan Pekerjaan</strong></p>
-  <ol>
-    <li>Pihak Kedua bekerja pada Pihak Pertama dengan posisi dan Point Of Hire (POH) sesuai dengan yang diatur dalam Lampiran 1.</li>
-    <li>Pihak Pertama berhak memberikan tugas dan jabatan lain serta lokasi kerja di tempat lain dari yang disebut dalam ayat ini.</li>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 4</u></h4>
+    <p style="margin-top: 0; font-weight: bold;">Kewajiban - Kewajiban</p>
+  </div>
+
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua berkewajiban untuk melaksanakan pekerjaan yang diberikan oleh Pihak Pertama
+    dengan sebaik-baiknya.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua berkewajiban untuk mematuhi dan/atau mentaati setiap aturan yang berlaku di
+    Perusahaan termasuk namun tidak terbatas kepada Peraturan Perusahaan, Peraturan
+    Pelaksanaan, Standar prosedur, Working Instruction, SK Direksi, Kode Etik, Memorandum,
+    Kebijakan dan Surat Edaran yang berlaku di Perusahaan.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Bahwa Pihak Kedua dengan sepenuh hati menyatakan setia terhadap Negara Kesatuan Republik
+    Indonesia (NKRI) yang berdasarkan Pancasila dan Undang-Undang Dasar Negara Republik
+    Tahun 1945, serta menjunjung tinggi atas Bhineka Tunggal Ika dan melaksanakannya sebagai
+    pedoman dalam kehidupan sehari-hari khususnya dalam lingkungan kerja.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua berkewajiban untuk bekerja sesuai dengan waktu kerja yang telah ditentukan oleh
+    Pihak Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Apabila Pihak Kedua tidak masuk bekerja diluar dari ketentuan normatif maka Pihak Kedua tidak
+    berhak menerima upah atau dengan kata lain Pihak Kedua akan dipotong sebesar 30% dari gaji
+    pokok secara prorata berdasarkan kehadiran.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Saat berakhirnya Perjanjian Kerja ini maka Pihak Kedua wajib mengembalikan semua inventaris
+    milik perusahaan yang digunakan selama masa tugas serta menunaikan/menyelesaikan seluruh
+    kewajiban-kewajiban sehubungan dengan berakhirnya perjanjian termasuk namun tidak
+    terbatas untuk menyelesaikan seluruh daftar kewajiban dalam formulir Exit Clearance sesuai
+    dengan aturan Perusahaan.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Pihak Kedua bersedia ditempatkan di unit dan lokasi kerja seluruh Indonesia sesuai kebutuhan
+    Pihak Pertama dan atas dasar surat penunjukan yang dikeluarkan secara resmi dari Pihak
+    Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Bahwa Pihak Kedua menyatakan sanggup untuk mengikatkan diri dalam komitmen selama 2
+    tahun efektif sejak berakhirnya hubungan kerja untuk tidak membajak/mengambil/
+    mengalihkan/menghasut pelanggan atau klien atau karyawan Pihak Pertama termasuk namun
+    tidak terbatas kepada pelanggan/klien/karyawan yang telah didapat oleh Pihak Kedua selama
+    menjalankan pekerjaan, untuk kepentingan sendiri atau kepentingan pihak lain dengan dalih
+    apapun kecuali atas persetujuan Pihak Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Kedua belah pihak sepakat bahwa seluruh hasil pekerjaan yang telah atau dijalankan oleh Pihak
+    Kedua selama masa kerja menjadi hak milik Pihak Pertama. Dari dan oleh karenanya Pihak
+    Kedua dilarang untuk mengklaim/menyembunyikan/menyalin/menghapus atau tindakan
+    lainnya yang dapat merugikan Pihak Pertama termasuk namun tidak terbatas atas berkas-
+    berkas, source code, program-program yang telah atau akan dijalankan oleh Pihak Pertama.</li>
   </ol>
 
-  <h4><u>PASAL 3</u></h4>
-  <p><strong>Pengupahan, Waktu Kerja dan Kesejahteraan Karyawan</strong></p>
-  <ol>
-    <li>Selama berlangsungnya Perjanjian ini, Pihak Pertama akan membayar upah kepada Pihak Kedua setiap bulannya dengan perincian sesuai yang diatur dalam Lampiran 1.</li>
-    <li>Selain dari upah Pihak Pertama juga akan memberikan Insentif kinerja ...</li>
-    <li>Jam Kerja diatur Pihak Pertama sesuai dengan ketentuan yang termuat di dalam Peraturan Perusahaan serta Peraturan Pelaksanaannya dengan mengacu kepada ketentuan perundangan mengenai jam kerja.</li>
-    <li>Pihak Kedua akan menanggung sendiri PPh dan selisih kekurangan PPh atas Upah Kerja dan Insentif Kinerja tersebut di atas dan/atau potongan lainnya ...</li>
-    <li>Pihak Pertama akan mendaftarkan Pihak Kedua sebagai peserta BPJS Ketenagakerjaan sesuai UU No. 24 Tahun 2011 jo. Peraturan Pemerintah No. 37 Tahun 2021 ...</li>
-    <li>Pihak Pertama akan mengikutsertakan Pihak Kedua dalam Program BPJS Kesehatan ...</li>
-    <li>Pihak Pertama akan memberikan Tunjangan Hari Raya (THR) ...</li>
-    <li>Pihak Kedua diberikan Cuti hari kerja sesuai dengan ketentuan yang berlaku di Perusahaan.</li>
-    <li>Posisi/Jabatan/Grade Pihak Kedua merupakan jabatan yang tidak diklasifikasikan mendapat Uang Kerja Lembur ...</li>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 5</u></h4>
+    <p style="margin-top: 0; margin-bottom: 4px; font-weight: bold;">Larangan - Larangan</p>
+    <p style="margin-top: 0;">Pihak Kedua dilarang:</p>
+  </div>
+
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Mengakhiri Perjanjian Kerja ini secara sepihak tanpa persetujuan dari Pihak Pertama.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Memberikan Keterangan palsu atau dipalsukan kepada Pihak Pertama.</li>
+    <li>Mabuk, madat, memakai obat bius atau obat-obatan psikotropika, narkotika di lingkungan
+    Perusahaan, baik selama waktu kerja maupun diluar waktu kerja.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Mencuri, menggelapkan, menipu atau melakukan kejahatan lainnya.</li>
+    <li>Menganiaya, menghina secara kasar atau mengancam Pihak Pertama, keluarga Pihak Pertama
+    atau teman sekerja.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Melakukan sesuatu yang bertentangan dengan hukum atau kesusilaan di tempat kerja.</li>
+    <li>Dengan sengaja atau karena kecerobohan Pihak Kedua merusak atau membiarkan dalam
+    keadaan bahaya barang milik Perusahaan.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Dengan sengaja walaupun sudah diperingatkan membiarkan dirinya atau teman sekerjanya
+    dalam keadaan bahaya.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Membongkar rahasia Perusahaan yang seharusnya dirahasiakan oleh Pihak Kedua.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Menerima setiap pemberian atau janji atau perlakuan yang diberikan oleh siapapun juga atau
+    melakukan perbuatan yang berakibat langsung atau tidak langsung merugikan Pihak Pertama,
+    baik kerugian secara materil maupun non materil.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Melakukan pelanggaran/kesalahan yang telah diatur dalam Peraturan Perusahaan dan/atau norma kerja lainnya.</li>
   </ol>
 
-  <h4><u>PASAL 4</u></h4>
-  <p><strong>Kewajiban - Kewajiban</strong></p>
-  <ol>
-    <li>Pihak Kedua berkewajiban untuk melaksanakan pekerjaan yang diberikan oleh Pihak Pertama dengan sebaik-baiknya.</li>
-    <li>Pihak Kedua berkewajiban untuk mematuhi dan/atau mentaati setiap aturan yang berlaku di Perusahaan termasuk namun tidak terbatas kepada Peraturan Perusahaan ...</li>
-    <li>Bahwa Pihak Kedua dengan sepenuh hati menyatakan setia terhadap Negara Kesatuan Republik Indonesia ...</li>
-    <li>Pihak Kedua berkewajiban untuk bekerja sesuai dengan waktu kerja yang telah ditentukan oleh Pihak Pertama.</li>
-    <li>Apabila Pihak Kedua tidak masuk bekerja diluar dari ketentuan normatif maka Pihak Kedua tidak berhak menerima upah atau dengan kata lain Pihak Kedua akan dipotong sebesar 30% dari gaji pokok secara prorata berdasarkan kehadiran.</li>
-    <li>Saat berakhirnya Perjanjian Kerja ini maka Pihak Kedua wajib mengembalikan semua inventaris milik perusahaan ...</li>
-    <li>Pihak Kedua bersedia ditempatkan di unit dan lokasi kerja seluruh Indonesia ...</li>
-    <li>Bahwa Pihak Kedua menyatakan sanggup untuk mengikatkan diri dalam komitmen selama 2 tahun efektif ...</li>
-    <li>Kedua belah pihak sepakat bahwa seluruh hasil pekerjaan yang telah atau dijalankan oleh Pihak Kedua selama masa kerja menjadi hak milik Pihak Pertama ...</li>
-  </ol>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 6</u></h4>
+    <p style="margin-top: 0; font-weight: bold;">Berakhirnya Perjanjian Kerja</p>
+  </div>
 
-  <h4><u>PASAL 5</u></h4>
-  <p><strong>Larangan - Larangan</strong></p>
-  <p>Pihak Kedua dilarang:</p>
-  <ol>
-    <li>Mengakhiri Perjanjian Kerja ini secara sepihak tanpa persetujuan dari Pihak Pertama.</li>
-    <li>Memberikan Keterangan palsu atau dipalsukan kepada Pihak Pertama.</li>
-    <li>Mabuk, madat, memakai obat bius atau obat-obatan psikotropika, narkotika di lingkungan Perusahaan ...</li>
-    <li>Mencuri, menggelapkan, menipu atau melakukan kejahatan lainnya.</li>
-    <li>Menganiaya, menghina secara kasar atau mengancam Pihak Pertama, keluarga Pihak Pertama atau teman sekerja.</li>
-    <li>Melakukan sesuatu yang bertentangan dengan hukum atau kesusilaan di tempat kerja.</li>
-    <li>Dengan sengaja atau karena kecerobohan Pihak Kedua merusak atau membiarkan dalam keadaan bahaya barang milik Perusahaan.</li>
-    <li>Dengan sengaja walaupun sudah diperingatkan membiarkan dirinya atau teman sekerjanya dalam keadaan bahaya.</li>
-    <li>Membongkar rahasia Perusahaan yang seharusnya dirahasiakan oleh Pihak Kedua.</li>
-    <li>Menerima setiap pemberian atau janji atau perlakuan yang diberikan oleh siapapun juga atau melakukan perbuatan yang berakibat langsung atau tidak langsung merugikan Pihak Pertama ...</li>
-    <li>Melakukan pelanggaran/kesalahan yang telah diatur dalam Peraturan Perusahaan dan/atau norma kerja lainnya.</li>
-  </ol>
-
-  <h4><u>PASAL 6</u></h4>
-  <p><strong>Berakhirnya Perjanjian Kerja</strong></p>
-  <ol>
-    <li>Para Pihak sepakat bahwa Perjanjian Kerja secara hukum akan berakhir dengan sendirinya apabila terdapat kejadian dan/atau keadaan tertentu sebagai berikut:
-      <ul>
-        <li>a. Berakhirnya masa kerja yang telah diperjanjikan ...</li>
-        <li>b. Selesainya pekerjaan yang diperjanjikan ...</li>
-        <li>c. Pihak Kedua meninggal dunia;</li>
-        <li>d. Pihak Pertama dinyatakan pailit;</li>
-        <li>e. Pihak Kedua melakukan tindakan yang dikategorikan pasal 5 ...</li>
-        <li>f. Pihak kedua menolak penempatan kerja/mutasi ...</li>
-        <li>g. Pihak Kedua tidak memenuhi/lalai/mengabaikan kewajiban ...</li>
-        <li>h. Pihak Kedua tidak dapat memenuhi target kinerja ...</li>
-        <li>i. Pihak Kedua memiliki hubungan keluarga ...</li>
-        <li>j. Pihak Kedua menyatakan mempunyai latar belakang skill/keahlian khusus ...</li>
-        <li>k. Keadaan force majeure ...</li>
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Para Pihak sepakat bahwa Perjanjian Kerja secara hukum akan berakhir dengan sendirinya apabila terdapat kejadian dan/atau keadaan tertentu sebagai berikut:
+      <ul style="list-style-type: none; padding-left: 0;">
+        <li style="list-style-type: none; padding-left: 0;">a. Berakhirnya masa kerja yang telah diperjanjikan dalam Perjanjian Kerja;</li>
+        <li style="list-style-type: none; padding-left: 0;">b. Selesainya pekerjaan yang diperjanjikan sebelum jangka waktu berakhirnya Perjanjian
+        Kerja;</li>
+        <li style="list-style-type: none; padding-left: 0;">c. Pihak Kedua meninggal dunia;</li>
+        <li style="list-style-type: none; padding-left: 0;">d. Pihak Pertama dinyatakan pailit;</li>
+        <li style="list-style-type: none; padding-left: 0;">e. Pihak Kedua melakukan tindakan yang dikategorikan pasal 5 dalam Perjanjian Kerja;</li>
+        <li style="list-style-type: none; padding-left: 0;">f. Pihak kedua menolak penempatan kerja/mutasi yang layak yang dilakukan Pihak Pertama;</li>
+        <li style="list-style-type: none; padding-left: 0;">g. Pihak Kedua tidak memenuhi/lalai/mengabaikan kewajiban-kewajibannya sebagai
+        karyawan termasuk namun tidak terbatas kewajiban-kewajiban yang telah ditentukan
+        dalam Pasal 4 (empat);</li>
+        <li style="list-style-type: none; padding-left: 0;">h. Pihak Kedua tidak dapat memenuhi target kinerja yang ditentukan sesuai dengan jabatan/
+        posisinya yang mengakibatkan Pihak Pertama tidak mendapatkan hasil sesuai dengan yang
+        diperjanjikan dan/atau yang telah ditargetkan Pihak Pertama, dan sebelumya pembinaan
+        telah dilakukan Pihak Pertama sesuai mekanisme pembinaan yang berlaku;</li>
+        <li style="list-style-type: none; padding-left: 0;">i. Pihak Kedua memiliki hubungan keluarga (sesuai dengan Kode Etik yang berlaku di
+        Perusahaan) dengan karyawan lain yang berada dalam satu departemen atau departemen
+        lain yang memiliki hubungan erat dengan departemen penugasan Pihak Kedua dan/atau
+        lalai mendeklarasikan/memberitahukan kepada Pihak Pertama adanya hubungan keluarga
+        sebelum ditandatanganinya Perjanjian Kerja ini;</li>
+        <li style="list-style-type: none; padding-left: 0;">j. Pihak Kedua menyatakan mempunyai latar belakang skill/keahlian khusus pada pekerjaan
+        tertentu berdasarkan data-data yang disampaikan kepada Pihak Pertama pada saat seleksi
+        /wawancara kerja, dan ternyata setelah dilakukan evaluasi pekerjaan oleh Pihak Pertama,
+        ternyata Pihak Kedua tidak bisa menunjukkan kapasitas kerjanya sesuai dengan keterangan
+        yang telah disampaikan;</li>
+        <li style="list-style-type: none; padding-left: 0;">k. Keadaan force majeure seperti bencana alam, kerusuhan, bencana nasional yang
+        menyebabkan Pihak Pertama tidak dapat melanjutkan hubungan kerja.</li>
       </ul>
     </li>
-    <li>Perjanjian Kerja dapat diakhiri sepihak oleh Pihak Pertama dalam hal:
-      <ul>
-        <li>a. Terdapat perubahan organisasi ...</li>
-        <li>b. Pihak Pertama melakukan efisiensi ...</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Perjanjian Kerja dapat diakhiri sepihak oleh Pihak Pertama dalam hal:
+      <ul style="list-style-type: none; padding-left: 0;">
+        <li style="list-style-type: none; padding-left: 0;">a. Terdapat perubahan organisasi yang mengakibatkan posisi/jabatan yang diperjanjikan
+        dalam Perjanjian Kerja tidak lagi diperlukan dalam organisasi dan Pihak Pertama tidak
+        bersedia untuk melanjutkan Perjanjian Kerja dengan penempatan jabatan yang baru;</li>
+        <li style="list-style-type: none; padding-left: 0;">b. Pihak Pertama melakukan efisiensi dalam organisasi yang berdampak kepada pengurangan
+        karyawan dan pengakhiran Perjanjian Kerja.</li>
       </ul>
     </li>
-    <li>Perjanjian Kerja dapat diakhiri sepihak oleh Pihak Kedua dalam hal:
-      <ul>
-        <li>a. Pihak Kedua mengundurkan diri secara sepihak ...</li>
-        <li>b. Pihak Kedua absen dan tidak masuk bekerja selama 3 hari kerja berturut-turut ...</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Perjanjian Kerja dapat diakhiri sepihak oleh Pihak Kedua dalam hal:
+      <ul style="list-style-type: none; padding-left: 0;">
+        <li style="list-style-type: none; padding-left: 0;">a. Pihak Kedua mengundurkan diri secara sepihak dengan terlebih dahulu memberitahukan
+        rencana pengunduran dirinya tersebut kepada Perusahaan dengan memperhatikan grade
+        Pihak kedua dengan ketentuan paling singkat 30 hari kalender khusus untuk grade
+        F/G/H/I/J/K atau paling singkat 60 hari kalender bagian grade A/B/C/D/E (grade Pihak
+        Kedua dapat dilihat dalam Lampiran 1). Jika Pihak Kedua mengundurkan diri tanpa
+        pemberitahuan sesuai ketentuan yang berlaku, maka Pihak Kedua akan dikenakan denda 1
+        (satu) kali gaji;</li>
+        <li style="list-style-type: none; padding-left: 0;">b. Pihak Kedua absen dan tidak masuk bekerja selama 3 (tiga) hari kerja berturut-turut atau
+        lebih tanpa disertai keterangan secara tertulis dengan bukti-bukti yang sah dan telah
+        dipanggil 2 (dua) kali oleh Perusahaan secara patut dan tertulis.</li>
       </ul>
     </li>
-    <li>Bahwa dengan berakhirnya Perjanjian Kerja ini untuk alasan apapun ...</li>
-    <li>Pihak Kedua wajib menjaga kerahasiaan apapun milik Pihak Pertama ...</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Bahwa dengan berakhirnya Perjanjian Kerja ini untuk alasan apapun termasuk namun tidak
+    terbatas apabila Perjanjian Kerja berakhir dalam keadaan seperti yang diatur dalam ayat 1., ayat
+    2., dan ayat 3., Pihak Kedua tidak termasuk ke dalam karyawan yang berhak atas uang pisah
+    seperti yang diatur dalam Peraturan Perusahaan.</li>
+    <li>Pihak Kedua wajib menjaga kerahasiaan apapun milik Pihak Pertama meskipun Pihak Kedua
+    sudah tidak bekerja lagi untuk Pihak Pertama.</li>
   </ol>
 
-  <h4><u>PASAL 7</u></h4>
-  <p><strong>Penyelesaian Permasalahan</strong></p>
-  <ol>
-    <li>Para Pihak sepakat akan menyelesaikan semua permasalahan yang timbul akibat Perjanjian Kerja ini secara musyawarah ...</li>
-    <li>Apabila jalan Musyawarah dan Mufakat tidak tercapai maka Para Pihak sepakat untuk diselesaikan melalui Jalur Ketenagakerjaan.</li>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 7</u></h4>
+    <p style="margin-top: 0; font-weight: bold;">Penyelesaian Permasalahan</p>
+  </div>
+
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Para Pihak sepakat akan menyelesaikan semua permasalahan yang timbul akibat Perjanjian
+    Kerja ini secara musyawarah untuk mencapai mufakat.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Apabila jalan Musyawarah dan Mufakat tidak tercapai maka Para Pihak sepakat untuk
+    diselesaikan melalui Jalur Ketenagakerjaan.</li>
   </ol>
 
-  <h4><u>PASAL 8</u></h4>
-  <p><strong>Ketentuan Peralihan</strong></p>
-  <ol>
-    <li>Apabila terdapat pertentangan antara ketentuan di dalam Perjanjian Kerja ini ...</li>
-    <li>Perjanjian Kerja ini dapat diperpanjang sesuai dengan ketentuan perundangan ...</li>
-    <li>Para Pihak sepakat bahwa setiap Perubahan/Penambahan terhadap ketentuan ...</li>
+  <div style="text-align: center;">
+    <h4 style="margin-bottom: 4px;"><u>PASAL 8</u></h4>
+    <p style="margin-top: 0; font-weight: bold;">Ketentuan Peralihan</p>
+  </div>
+
+  <ol style="margin-left: 20px; padding-left: 10px; text-align: justify;">
+    <li style="margin-bottom: 10px; line-height: 1.5;">Apabila terdapat pertentangan antara ketentuan di dalam Perjanjian Kerja ini yang isinya lebih
+    tinggi dari Ketentuan di dalam Peraturan Perusahaan dan/atau Ketentuan, Pengumuman,
+    Peraturan yang lain yang berlaku di Perusahaan, maka Para Pihak sepakat untuk tetap
+    berpedoman kepada Ketentuan yang terdapat di dalam Perjanjian Kerja ini.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Perjanjian Kerja ini dapat diperpanjang sesuai dengan ketentuan perundangan atas dasar
+    kesepakatan Para Pihak.</li>
+    <li style="margin-bottom: 10px; line-height: 1.5;">Para Pihak sepakat bahwa setiap Perubahan/Penambahan terhadap ketentuan di dalam
+    Perjanjian Kerja ini yang ada dikemudian hari akan diatur tersendiri di dalam Perjanjian
+    tambahan berdasarkan kesepakatan Para Pihak.</li>
   </ol>
 
-        <p>Demikian Perjanjian Kerja ini dibuat rangkap 2 (dua) yang mempunyai kekuatan hukum yang sama. Dibaca dan dimengerti isinya oleh kedua belah pihak serta ditandatangani oleh Para Pihak di atas materai secukupnya dalam keadaan sadar tanpa ada tekanan atau paksaan dari pihak manapun untuk dapat dilaksanakan dengan penuh itikad baik oleh kedua belah pihak.</p>
-
+    <p style="margin-left: 20px; margin-right: 20px; text-align: justify; line-height: 1.6; margin-bottom: 10px; line-height: 1.5;">
+      Demikian Perjanjian Kerja ini dibuat rangkap 2 (dua) yang mempunyai kekuatan hukum yang sama.
+      Dibaca dan dimengerti isinya oleh kedua belah pihak serta ditandatangani oleh Para Pihak di atas
+      materai secukupnya dalam keadaan sadar tanpa ada tekanan atau paksaan dari pihak manapun
+      untuk dapat dilaksanakan dengan penuh itikad baik oleh kedua belah pihak.
+    </p>
         <div class="row">
           <div class="col-6 text-center">
             <p><strong>PIHAK PERTAMA</strong></p>
@@ -223,7 +400,9 @@
               <td rowspan="4">VI</td>
               <td>Pengupahan (gross)</td>
               <td>
-                a. Gaji Pokok: Rp 4.866.890<br/>
+              <p style="text-align: justify; margin-left: 20px;">
+                a. Gaji Pokok: <t t-raw="'Rp {:,}'.format(int(contract_id.wage)).replace(',', '.')"/>
+              </p>
                 b. Tunjangan Service Kendaraan: Rp 150.000<br/>
                 c. Tunjangan Pulsa: Rp 100.000 (minimal bergabung 20 hari kerja)
               </td>
@@ -233,20 +412,39 @@
 
         <hr/>
 
-        <h4><u>Surat Pernyataan Komitmen Profesionalisme &amp; KPI</u></h4>
-        <p>Sebagai wujud dari rasa tanggung jawab dan sikap profesionalisme sebagai karyawan PT. Mitra Career Solution, dengan ini saya menyatakan bahwa saya akan sepenuh hati menjalankan tugas dan tanggung jawab yang diberikan dengan menjunjung tinggi etika kerja yang berlaku dalam hal ini:</p>
-        <ol>
-          <li>Tidak menyalahgunakan jabatan untuk kepentingan pribadi/siapapun kecuali kepentingan perusahaan.</li>
-          <li>Tidak menerima ataupun meminta segala bentuk komisi baik secara langsung atau tidak langsung yang berkaitan dengan pekerjaan saya.</li>
-          <li>Menjaga kerahasiaan seluruh informasi milik Perusahaan.</li>
-          <li>Bertingkah laku baik serta tidak akan melakukan tindakan/perbuatan kriminal dan yang bertentangan dengan Undang-Undang, norma dan hukum Negara Republik Indonesia serta Peraturan Perusahaan yang berlaku.</li>
-          <li>Bersedia mencapai memenuhi Target dan KPI yang diberikan oleh Perusahaan.</li>
-          <li>Bersedia mengikuti aturan atau kebijakan yang berlaku di Perusahaan tempat saya ditempatkan.</li>
+        <h4 style="margin-bottom: 4px;">
+          <u><strong>Surat Pernyataan Komitmen Profesionalisme &amp; KPI</strong></u>
+        </h4>
+
+        <p style="text-align: justify; line-height: 1.6; margin-bottom: 10px; line-height: 1.5;">
+          Sebagai wujud dari rasa tanggung jawab dan sikap profesionalisme sebagai karyawan PT. Mitra
+          Career Solution, dengan ini saya menyatakan bahwa saya akan sepenuh hati menjalankan tugas dan
+          tanggung jawab yang diberikan dengan menjunjung tinggi etika kerja yang berlaku dalam hal ini:
+        </p>
+        <ol style="text-align: justify; line-height: 1.6; margin-left: 20px; margin-bottom: 10px; line-height: 1.5; list-style-position: inside;">
+          <li style="margin-bottom: 6px;">Tidak menyalahgunakan jabatan untuk kepentingan pribadi/siapapun kecuali kepentingan perusahaan.</li>
+          <li style="margin-bottom: 6px;">Tidak menerima ataupun meminta segala bentuk komisi baik secara langsung atau tidak langsung yang berkaitan dengan pekerjaan saya.</li>
+          <li style="margin-bottom: 6px;">Menjaga kerahasiaan seluruh informasi milik Perusahaan.</li>
+          <li style="margin-bottom: 6px;">Bertingkah laku baik serta tidak akan melakukan tindakan/perbuatan kriminal dan yang bertentangan dengan Undang-Undang, norma dan hukum Negara Republik Indonesia serta Peraturan Perusahaan yang berlaku.</li>
+          <li style="margin-bottom: 6px;">Bersedia mencapai memenuhi Target dan KPI yang diberikan oleh Perusahaan.</li>
+          <li style="margin-bottom: 6px;">Bersedia mengikuti aturan atau kebijakan yang berlaku di Perusahaan tempat saya ditempatkan.</li>
         </ol>
 
-        <p>Saya bersedia mengundurkan diri dari jabatan/perusahaan atau dikenakan tindakan disiplin termasuk surat peringatan dengan pemutusan hubungan kerja apabila terbukti saya melanggar komitmen di atas.</p>
-        <p>Surat Pernyataan ini saya buat dengan sebenarnya atas dasar keyakinan dan pengetahuan saya.</p>
-        <p>Surat Pernyataan Komitmen Profesionalisme &amp; KPI ini merupakan satu kesatuan dan bagian yang tidak terpisahkan dari Perjanjian Kerja Waktu Tertentu No. <t t-esc="doc.pkwt_letter_number or '-'"/></p>
+        <p style="text-align: justify; line-height: 1.6; margin-bottom: 10px; line-height: 1.5;">
+          Saya bersedia mengundurkan diri dari jabatan/perusahaan atau dikenakan tindakan disiplin
+          termasuk surat peringatan dengan pemutusan hubungan kerja apabila terbukti saya melanggar
+          komitmen di atas.
+        </p>
+
+        <p style="text-align: justify; line-height: 1.6; margin-bottom: 10px; line-height: 1.5;">
+          Surat Pernyataan ini saya buat dengan sebenarnya atas dasar keyakinan dan pengetahuan saya.
+        </p>
+
+        <p style="text-align: justify; line-height: 1.6; margin-bottom: 10px; line-height: 1.5;">
+          Surat Pernyataan Komitmen Profesionalisme &amp; KPI ini merupakan satu kesatuan dan bagian yang tidak
+          terpisahkan dari Perjanjian Kerja Waktu Tertentu No. <t t-esc="doc.pkwt_letter_number or '-'"/>.
+        </p>
+
         <p>Batang,<t t-esc="full_date"/><br/>Yang Menyatakan,</p>
         <br/><br/><br/>
         <p><strong><t t-esc="employee.name"/></strong></p>

@@ -10,9 +10,9 @@ class MinIOUploadService(models.AbstractModel):
 
     def upload_file(self, filename, file_content):
         client = Minio(
-            "10.10.8.242:9000",  # Ubah jika MinIO Anda di server lain
-            access_key="VkNYbNVpLCw8AwOWngz7",
-            secret_key="IILA5zElrEAa7Cpa4KZeaUUusRUP0QkqoAJIjZeA",
+            "localhost:9000",  # Ubah jika MinIO Anda di server lain
+            access_key="7THu6x4zIquDHvO4rSEg",
+            secret_key="iypsOpwgZETG8EOiu5h8BHUVfRGmLlFtypOyrfCq",
             secure=False
         )
         bucket_name = "surat-pkwt"
@@ -35,4 +35,4 @@ class MinIOUploadService(models.AbstractModel):
             raise UserError(_("Gagal mengunggah file ke MinIO: %s") % str(e))
 
         # Hasil URL file
-        return f"https://cs3.ssmindonesia.com/{bucket_name}/{filename}"
+        return f"http://localhost:9001/{bucket_name}/{filename}"
