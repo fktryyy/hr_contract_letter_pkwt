@@ -25,7 +25,7 @@
         <div class="text-center">
           <h3><u>PERJANJIAN KERJA WAKTU TERTENTU</u></h3>
           <t t-if="doc.pkwt_letter_number">
-            <p>Nomor : <t t-esc="doc.pkwt_letter_number or '-'"/></p>
+            <p>Nomor : <t t-esc="doc.pkwt_letter_number"/></p>
           </t>
 
         </div>
@@ -193,7 +193,7 @@
             <tr>
               <td>II</td>
               <td>Posisi</td>
-              <td>Direct Sales Executive (DSE)</td>
+              <td><t t-esc="employee.job_id.name"/></td>
             </tr>
             <tr>
               <td>III</td>

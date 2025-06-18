@@ -4,6 +4,9 @@ from odoo import models, fields, api, _
 from babel.dates import format_date
 from datetime import date
 from odoo.exceptions import UserError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class HrContract(models.Model):
@@ -43,23 +46,30 @@ class HrContract(models.Model):
         Bisa untuk multiple contract.
         """
         minio_service = self.env['minio.upload.service']
-        # FIX: pastikan report diambil hanya sekali
-        report = self.env.ref('hr_contract_letter_pkwt.report_hr_contract_letter')
+        report_ref = 'hr_contract_letter_pkwt.report_hr_contract_letter'
 
+        if not isinstance(report_ref, str):
+            raise UserError(_("Referensi report harus berupa string, bukan %s.") % type(report_ref).__name__)
+
+        try:
+            report = self.env.ref(report_ref)
+        except Exception as e:
+            raise UserError(_("Gagal memuat report '%s': %s") % (report_ref, str(e)))
         for contract in self:
             if not contract.employee_id:
-                raise UserError(_("Kontrak '%s' tidak memiliki employee terkait.") % contract.name)
+                raise UserError(_("Kontrak '%s' tidak memiliki karyawan terkait.") % contract.name)
 
             if not contract.pkwt_letter_number:
                 today = fields.Date.context_today(contract)
-                number = contract.env['ir.sequence'].next_by_code('hr.contract.pkwt')
-                roman_month = contract._get_roman_month(today.month)
+                number = self.env['ir.sequence'].next_by_code('hr.contract.pkwt')
+                roman_month = self._get_roman_month(today.month)
                 contract.pkwt_letter_number = f"{number}/PKWT-MCN/IOH-JTM/MPC/{roman_month}/{today.year}"
 
-            # Generate PDF dari template QWeb
-            pdf_content, _ = report._render_qweb_pdf([contract.id])
+            try:
+                pdf_content, _ = report._render_qweb_pdf([contract.id])
+            except Exception as e:
+                raise UserError("Gagal membuat PDF dari template surat PKWT: %s" % str(e))
 
-            # Nama file disanitasi
             safe_name = re.sub(r'[^a-zA-Z0-9_]', '_', contract.employee_id.name)
             filename = f"Surat-PKWT-{safe_name}.pdf"
 
@@ -73,7 +83,6 @@ class HrContract(models.Model):
                 contract.generate_letter = True
             else:
                 raise UserError(_("Gagal mendapatkan URL dari MinIO."))
-
 
 class HrContractHistory(models.Model):
     _inherit = 'hr.contract.history'
