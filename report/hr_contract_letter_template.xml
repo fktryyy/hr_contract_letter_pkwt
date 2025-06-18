@@ -246,8 +246,7 @@
 
         <p>Saya bersedia mengundurkan diri dari jabatan/perusahaan atau dikenakan tindakan disiplin termasuk surat peringatan dengan pemutusan hubungan kerja apabila terbukti saya melanggar komitmen di atas.</p>
         <p>Surat Pernyataan ini saya buat dengan sebenarnya atas dasar keyakinan dan pengetahuan saya.</p>
-        <p>Surat Pernyataan Komitmen Profesionalisme &amp; KPI ini merupakan satu kesatuan dan bagian yang tidak terpisahkan dari Perjanjian Kerja Waktu Tertentu No. 0178/PKWT-MCN/IOH-JTM/MPC/IV/2025</p>
-
+        <p>Surat Pernyataan Komitmen Profesionalisme &amp; KPI ini merupakan satu kesatuan dan bagian yang tidak terpisahkan dari Perjanjian Kerja Waktu Tertentu No. <t t-esc="doc.pkwt_letter_number or '-'"/></p>
         <p>Batang,<t t-esc="full_date"/><br/>Yang Menyatakan,</p>
         <br/><br/><br/>
         <p><strong><t t-esc="employee.name"/></strong></p>

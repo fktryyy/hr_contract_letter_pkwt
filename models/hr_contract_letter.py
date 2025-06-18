@@ -36,7 +36,7 @@ class HrContract(models.Model):
             self.generate_pkwt_letters()
 
         return self.env.ref(
-            'hr_contract_letter_pkwt.report_hr_contract_letter_template'
+            'hr_contract_letter_pkwt.report_hr_contract_letter'
         ).report_action(self)
 
     def generate_pkwt_letters(self):
@@ -45,16 +45,21 @@ class HrContract(models.Model):
         dan simpan URL serta status ke record kontrak.
         Bisa untuk multiple contract.
         """
+        if not self:
+            raise UserError(_("Tidak ada kontrak yang dipilih."))
+
+        # Pastikan self adalah recordset, bukan list Python
+        if isinstance(self, list):
+            self = self.env['hr.contract'].browse([rec.id for rec in self if hasattr(rec, 'id')])
+
         minio_service = self.env['minio.upload.service']
         report_ref = 'hr_contract_letter_pkwt.report_hr_contract_letter'
-
-        if not isinstance(report_ref, str):
-            raise UserError(_("Referensi report harus berupa string, bukan %s.") % type(report_ref).__name__)
 
         try:
             report = self.env.ref(report_ref)
         except Exception as e:
             raise UserError(_("Gagal memuat report '%s': %s") % (report_ref, str(e)))
+
         for contract in self:
             if not contract.employee_id:
                 raise UserError(_("Kontrak '%s' tidak memiliki karyawan terkait.") % contract.name)
@@ -66,11 +71,18 @@ class HrContract(models.Model):
                 contract.pkwt_letter_number = f"{number}/PKWT-MCN/IOH-JTM/MPC/{roman_month}/{today.year}"
 
             try:
-                pdf_content, _ = report._render_qweb_pdf([contract.id])
+                # Gunakan recordset bukan list Python
+                report_service = self.env['ir.actions.report']
+                pdf_content, content_type = report_service._render_qweb_pdf(report_ref, contract.ids)
             except Exception as e:
                 raise UserError("Gagal membuat PDF dari template surat PKWT: %s" % str(e))
 
-            safe_name = re.sub(r'[^a-zA-Z0-9_]', '_', contract.employee_id.name)
+            # Pastikan nama employee berupa string
+            employee_name = contract.employee_id.name
+            if isinstance(employee_name, list):
+                employee_name = " ".join(employee_name)
+            safe_name = re.sub(r'[^a-zA-Z0-9_]', '_', employee_name or "unknown")
+
             filename = f"Surat-PKWT-{safe_name}.pdf"
 
             try:
@@ -83,6 +95,7 @@ class HrContract(models.Model):
                 contract.generate_letter = True
             else:
                 raise UserError(_("Gagal mendapatkan URL dari MinIO."))
+
 
 class HrContractHistory(models.Model):
     _inherit = 'hr.contract.history'
