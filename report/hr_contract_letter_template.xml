@@ -14,15 +14,31 @@
             <field name="header_line" eval="False"/>
             <field name="dpi">90</field>
         </record>
+
+
         
   <template id="report_hr_contract_letter_template">
     <t t-call="web.html_container">
       <t t-call="web.external_layout">
+        <style>
+          .page {
+            page-break-after: always;
+            page-break-inside: avoid;
+          }
+        </style>
+        <style>
+          table.noborder td {
+            border: 0px solid transparent !important;
+          }
+        </style>     
         <t t-foreach="docs" t-as="doc">
           <t t-set="employee" t-value="doc.employee_id"/>
             <t t-set="contract_id" t-value="doc"/>
               <t t-set="weekday_name" t-value="doc.today_weekday"/>
                <t t-set="full_date" t-value="doc.today_display"/>
+
+    <div class="page">
+
         <div class="text-center">
           <h3><u>PERJANJIAN KERJA WAKTU TERTENTU</u></h3>
           <t t-if="doc.pkwt_letter_number">
@@ -32,7 +48,7 @@
         </div>
           <p>Pada hari ini <t t-esc="weekday_name"/>, tanggal <t t-esc="full_date"/> telah diadakan Perjanjian Kerja Waktu Tertentu dari dan antara :</p>
        <!-- Pihak Pertama -->
-      <table style="margin-left: 20px; border-collapse: collapse; border: none;" border="0">
+      <table class="noborder" style="margin-left: 20px; border-collapse: collapse;" border="0">
         <tr>
           <td style="border: none; vertical-align: top;">I.</td>
           <td style="padding-left: 10px; border: none;">Nama</td>
@@ -59,7 +75,7 @@
       selanjutnya disebut “Pihak Pertama”.</p>
 
       <!-- Pihak Kedua -->
-        <table style="margin-left: 20px; border-collapse: collapse; border: none;" border="0">
+        <table class="noborder" style="margin-left: 20px; border-collapse: collapse;" border="0">
           <tr>
             <td style="border: none; vertical-align: top;">II.</td>
             <td style="padding-left: 10px; border: none;">Nama</td>
@@ -129,6 +145,10 @@
       Lamanya waktu Perjanjian Kerja diatur dalam Lampiran 1.
     </li>
   </ol>
+  </div>
+
+  <div class="page">
+
   <div style="text-align: center;">
     <h4 style="margin-bottom: 4px;"><u>PASAL 2</u></h4>
     <p style="font-weight: bold; margin-top: 0;">Jenis dan Penempatan Pekerjaan</p>
@@ -137,6 +157,7 @@
     <li style="margin-bottom: 8px; line-height: 1.5;">Pihak Kedua bekerja pada Pihak Pertama dengan posisi dan Point Of Hire (POH) sesuai dengan yang diatur dalam Lampiran 1.</li>
     <li style="margin-bottom: 8px; line-height: 1.5;">Pihak Pertama berhak memberikan tugas dan jabatan lain serta lokasi kerja di tempat lain dari yang disebut dalam ayat ini.</li>
   </ol>
+
   <div style="text-align: center;">
   <h4 style="margin-bottom: 4px;"><u>PASAL 3</u></h4>
   <p style="font-weight: bold; margin-top: 0;">Pengupahan, Waktu Kerja dan Kesejahteraan Karyawan</p>
@@ -172,6 +193,10 @@
     Uang Kerja Lembur sebagaimana dimaksud dalam Peraturan Pemerintah Nomor 35 Pasal 27
     ayat 2 dan ayat 3.</li>
   </ol>
+
+  </div>
+  
+  <div class="page">
 
   <div style="text-align: center;">
     <h4 style="margin-bottom: 4px;"><u>PASAL 4</u></h4>
@@ -241,6 +266,10 @@
     <li style="margin-bottom: 10px; line-height: 1.5;">Melakukan pelanggaran/kesalahan yang telah diatur dalam Peraturan Perusahaan dan/atau norma kerja lainnya.</li>
   </ol>
 
+  </div>
+  
+  <div class="page">
+
   <div style="text-align: center;">
     <h4 style="margin-bottom: 4px;"><u>PASAL 6</u></h4>
     <p style="margin-top: 0; font-weight: bold;">Berakhirnya Perjanjian Kerja</p>
@@ -307,7 +336,9 @@
     <li>Pihak Kedua wajib menjaga kerahasiaan apapun milik Pihak Pertama meskipun Pihak Kedua
     sudah tidak bekerja lagi untuk Pihak Pertama.</li>
   </ol>
-
+  </div>
+  
+  <div class="page">
   <div style="text-align: center;">
     <h4 style="margin-bottom: 4px;"><u>PASAL 7</u></h4>
     <p style="margin-top: 0; font-weight: bold;">Penyelesaian Permasalahan</p>
@@ -355,9 +386,11 @@
              <p><strong><t t-esc="employee.name"/></strong><br/><t t-esc="employee.job_id.name"/></p>
           </div>
         </div>
-
         <hr/>
 
+        </div>
+  
+  <div class="page">
         <h4><u>Lampiran 1</u></h4>
         <p><strong>Perjanjian Kerja Waktu Tertentu Nomor : <t t-esc="doc.pkwt_letter_number"/></strong></p>
         <ul>
@@ -400,11 +433,13 @@
               <td rowspan="4">VI</td>
               <td>Pengupahan (gross)</td>
               <td>
-              <p style="text-align: justify; margin-left: 20px;">
-                a. Gaji Pokok: <t t-raw="'Rp {:,}'.format(int(contract_id.wage)).replace(',', '.')"/>
-              </p>
-                b. Tunjangan Service Kendaraan: Rp 150.000<br/>
-                c. Tunjangan Pulsa: Rp 100.000 (minimal bergabung 20 hari kerja)
+                <div style="margin-left: 20px; text-align: justify;">
+                  <ul style="margin: 0; padding-left: 20px; list-style-type: lower-alpha;">
+                    <li>Gaji Pokok: <t t-raw="'Rp {:,}'.format(int(contract_id.wage)).replace(',', '.')"/></li>
+                    <li>Tunjangan Service Kendaraan: Rp 150.000</li>
+                    <li>Tunjangan Pulsa: Rp 100.000 (minimal bergabung 20 hari kerja)</li>
+                  </ul>
+                </div>
               </td>
             </tr>
           </table>
@@ -412,6 +447,9 @@
 
         <hr/>
 
+        </div>
+  
+  <div class="page">
         <h4 style="margin-bottom: 4px;">
           <u><strong>Surat Pernyataan Komitmen Profesionalisme &amp; KPI</strong></u>
         </h4>
@@ -448,6 +486,7 @@
         <p>Batang,<t t-esc="full_date"/><br/>Yang Menyatakan,</p>
         <br/><br/><br/>
         <p><strong><t t-esc="employee.name"/></strong></p>
+    </div>
       </t>
       </t>
     </t>
